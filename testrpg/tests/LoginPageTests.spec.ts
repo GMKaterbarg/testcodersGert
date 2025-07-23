@@ -16,7 +16,7 @@ test.describe('Login Tests',
         });
 
         test('login', async ({ myLoginPage, page }) => {
-            await myLoginPage.login();
+            await myLoginPage.landingpage();
             const heroTitle = page.locator('[data-testid="hero"] h1')
             const logoutButton = page.locator('button[data-testid="logout-button"]');
             await expect(heroTitle).toBeVisible();
@@ -33,12 +33,9 @@ test.describe('Login Tests',
         });
 
         test('login and go to landingsite', async ({ myLoginPage, page }) => {
-            const heroTitle = page.locator('[data-testid="hero"] h1')
-            const characterNameTitle = page.getByTestId('character-name');
             await myLoginPage.login();
-            await expect(heroTitle).toBeVisible();
-            await expect(heroTitle).toHaveText(`TestRPG`);
-            await myLoginPage.clickTopPlay.click();
+            const characterNameTitle = page.getByTestId('character-name');
+            const logoutButton = page.locator('button[data-testid="logout-button"]');
             await expect(characterNameTitle).toHaveText('Your character');
         });
 

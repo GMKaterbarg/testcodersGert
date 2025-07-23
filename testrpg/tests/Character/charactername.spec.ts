@@ -1,4 +1,11 @@
 import { test, expect, Page } from '@playwright/test';
+import { character } from '../../pages/character/character';
+import { TestRpgBase, constValues } from "../../utils/SelectRpgBase";
+
+const characterToSmall = 'G'.repeat(2);
+const characterToMinimum = 'G'.repeat(3);
+const characterToMaximum = 'G'.repeat(20);
+const characterToBig = 'G'.repeat(21);
 
 test.describe('Character Name Validation', () => {
     const url: string = 'https://test-rpg.vercel.app/play'; // Replace with your actual app URL

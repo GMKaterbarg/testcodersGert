@@ -34,6 +34,19 @@ export class LoginPage {
         await this.usernameField.fill(USERNAME);
         await this.passwordField.fill(PASSWORD);
         await this.submitButton.click();
+        await this.clickTopPlay.click();
+    };
+
+    public async landingpage(): Promise<void> {
+        await this.page.goto(BASE_URL);
+        try {
+            await this.loginButton.click();
+        } catch (error) {
+            throw new Error(`Failed to click the login button. Check if button present on page`);
+        }
+        await this.usernameField.fill(USERNAME);
+        await this.passwordField.fill(PASSWORD);
+        await this.submitButton.click();
     };
 
 }
