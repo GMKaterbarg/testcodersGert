@@ -40,4 +40,17 @@ test.describe('Character Name Validation', () => {
         const errorMessageLocator = page.getByText('Name must be at least 3 characters');
         await expect(errorMessageLocator).toBeHidden();
     });
+
+    test('input of exactly 3 characters', async ({ characterPage, page }) => {
+        await characterPage.fillNameAndSubmit(characterToMinimum);
+        const errorMessageLocator = page.getByText('Name must be at least 3 characters');
+        await expect(errorMessageLocator).toBeHidden();
+    });
+
+    test('input of exactly 20 characters', async ({ characterPage, page }) => {
+        await characterPage.fillNameAndSubmit(characterToMaximum);
+        const errorMessageLocator = page.getByText('Name must be at least 3 characters');
+        await expect(errorMessageLocator).toBeHidden();
+    });
+
 });
