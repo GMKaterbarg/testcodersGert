@@ -13,7 +13,6 @@ export class TestRpgBase {
     public readonly loginbutton: Locator;
     public readonly statsoverviewTitle: Locator;
     public charactername: Locator;
-    public readonly characterNameTitle: Locator;
     public buildkind: Locator;
     public readonly startbutton: Locator;
     public readonly strenght: Locator;

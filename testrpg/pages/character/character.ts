@@ -3,22 +3,26 @@ import { Locator, Page } from '@playwright/test';
 import { TestRpgBase, constValues } from "../../utils/SelectRpgBase";
 
 export class character extends TestRpgBase {
-    private readonly loggingWebAddress: Locator;
-    public readonly applications: Locator;
-    public readonly configurations: Locator;
-    public workingApp: string | null;
+    public readonly characterNameTitle: Locator;
+    public nameInputSelector: string;
+    public startbutton: Locator; // Replace with your submit button selector
 
 
     constructor(page: Page) {
         super(page);
-        this.loggingWebAddress = page.locator("#loggingWebaddress_input_control");
-        this.applications = page.locator('#config_architecture_applications');
-        this.configurations = page.locator('#config_architecture_configurations');
-        this.workingApp = null;
+        this.characterNameTitle = page.getByRole('heading', { name: 'Choose a name and build', level: 3 });
+        this.nameInputSelector = '#character-name'; // Replace with your input's selector
+        this.startbutton = page.getByRole('button', { name: 'Start!' }); // Use the static property from TestRpgBase        
     }
 
     public async fillFields(name: string, description: string, webAddress: string, configurationSetting: string): Promise<void> {
         await this.charactername.fill(name);
-
     }
+
+    public async fillNameAndSubmit(name: string): Promise<void> {
+        await this.charactername.fill(name);
+        await this.startbutton.click();
+    };
+
+
 }
