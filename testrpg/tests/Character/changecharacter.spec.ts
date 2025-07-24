@@ -1,5 +1,5 @@
 import { test as base, Page, expect } from '@playwright/test';
-import { character } from '../../pages/character/character';
+import { chcharacter } from '../../pages/character/changecharacter';
 import { TestRpgBase, constValues } from "../../utils/SelectRpgBase";
 
 type Ability = {
@@ -21,21 +21,21 @@ const characterBuildsabilities: Ability[] = [
 
 
 const test = base.extend<{
-    characterPage: character;
+    chcharacterPage: chcharacter;
     page: Page;
 }>({
-    characterPage: async ({ page }, use) => {
-        const characterPage = new character(page);
+    chcharacterPage: async ({ page }, use) => {
+        const characterPage = new chcharacter(page);
         await use(characterPage);
     }
 });
 
 test.describe('Character build Validation', () => {
 
-    test.beforeEach(async ({ characterPage }) => { await characterPage.initialize(); });
+    test.beforeEach(async ({ chcharacterPage }) => { await chcharacterPage.initialize(); });
 
-    test('test buildtypes', async ({ characterPage, page }) => {
-        await characterPage.fillFields(characterNormal);
+    test('test buildtypes', async ({ chcharacterPage, page }) => {
+        await chcharacterPage.fillname(characterNormal);
         for (const buildType of characterBuildTypes) {
             console.log(`Testing build type: ${buildType}`);
             await page.getByRole('combobox', { name: /Build/i }).click();
@@ -46,8 +46,8 @@ test.describe('Character build Validation', () => {
         }
     });
 
-    test('test buildtypes and ability ', async ({ characterPage, page }) => {
-        await characterPage.fillFields(characterNormal);
+    test('test buildtypes and ability ', async ({ chcharacterPage, page }) => {
+        await chcharacterPage.fillname(characterNormal);
         for (const build of characterBuildsabilities) {
             console.log(`Testing build: ${build.name}`);
             console.log(`Stats → Strength: ${build.Strength}, Agility: ${build.Agility}, Wisdom: ${build.Wisdom}, Magic: ${build.Magic}`);
@@ -59,6 +59,28 @@ test.describe('Character build Validation', () => {
         }
 
     });
+
+    test('Test and validate buildtypes and ability', async ({ chcharacterPage, page }) => {
+        await chcharacterPage.fillname(characterNormal);
+
+        const count = chcharacterPage.buildCombobox.count();
+
+        for (const count of characterBuildsabilities) {
+            console.log(`Testing build: ${count.name}`);
+            console.log(`Stats → Strength: ${count.Strength}, Agility: ${count.Agility}, Wisdom: ${count.Wisdom}, Magic: ${count.Magic}`);
+
+            page.getByRole('combobox', { name: /Build/i }).click();
+            await page.getByRole('option', { name: count.name }).click();
+
+            await expect(page.getByRole('combobox', { name: /Build/i })).toHaveText(count.name);
+            await expect(chcharacterPage.strengthLocator).toHaveText(String(count.Strength));
+            await expect(chcharacterPage.agilityLocator).toHaveText(String(count.Agility));
+            await expect(chcharacterPage.wisdomLocator).toHaveText(String(count.Wisdom));
+            await expect(chcharacterPage.magicLocator).toHaveText(String(count.Magic));
+        }
+
+    });
+
 
 
 });
