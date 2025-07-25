@@ -24,6 +24,7 @@ test.describe('Validate Input Lorem Ipsum', () => {
         await loremipsumPage.fillNameAndSubmitandfill(characterNormal, inputtext);
 
         await expect(loremipsumPage.levelupmessage).toContainText('Dolar sit amet!');
+        await expect(loremipsumPage.loreminputfield).toBeDisabled();
     });
 
 

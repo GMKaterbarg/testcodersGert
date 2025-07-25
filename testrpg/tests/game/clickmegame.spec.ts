@@ -25,6 +25,7 @@ test.describe('Click action', () => {
         await clickmegamePage.clickme();
 
         await expect(clickmegamePage.levelup).toContainText('Great job! You levelled up');
+        await expect(clickmegamePage.clickmebutton).toBeDisabled();
     });
 
 
